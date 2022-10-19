@@ -43,9 +43,11 @@ p <- t %>%
         axis.ticks.y=element_blank(),
         axis.title.x = element_blank(),
         legend.position="top",
-        legend.title = element_blank())+
+        legend.title = element_blank(),
+        panel.grid.major=element_line(colour="white"),
+        panel.grid.minor=element_line(colour="white"))+
   transition_reveal(Jahr)
 
-animate(p, duration = 6, fps = 60, width = 800, height = 400, renderer = gifski_renderer())
-anim_save("trend_progressive_linechart.gif")
+animate(p, duration = 1, fps = 100, width = 600, height = 400, renderer = magick_renderer(), bg = 'transparent')
+anim_save("trend_progressive_linechart5t.gif")
 
