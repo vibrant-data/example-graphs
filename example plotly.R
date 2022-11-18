@@ -59,8 +59,9 @@ fig <- plot_ly(type = 'mesh3d',
                k = c(0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6),
                intensity = seq(0, 1, length = 8),
                color = seq(0, 1, length = 8),
-               colors = colorRamp(rainbow(8))
-) %>% layout(showlegend = FALSE) %>%
+               colors = colorRamp(viridis::turbo(8))
+) 
+fig <- fig %>% layout(showlegend = FALSE) %>%
   config(fig, displayModeBar = FALSE)%>% 
   layout(title = "",
          plot_bgcolor  = "rgba(0, 0, 0, 0)",
