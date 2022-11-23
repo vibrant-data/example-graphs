@@ -19,6 +19,21 @@ data_tidy <- data %>%
 data_filtered <- data_tidy %>%
   filter(`Country name` == "Germany")
 
+
+
+data <- read_csv("world-happiness-report.csv")
+
+data_count <- data %>%
+  count(`Country name`)
+
+remove <- data_count$`Country name`[data_count$n == 1]
+
+data <- data %>%
+  filter(!(`Country name` %in% remove))
+
+
+
+
 ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
   theme(legend.position = "none") +
   geom_line() +
