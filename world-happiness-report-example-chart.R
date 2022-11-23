@@ -1,26 +1,43 @@
+library(tidyverse)
 data <- read_csv("world-happiness-report.csv")
 
 # data_filtered <- data %>%
 #   filter(`Country name` == "Germany")
 
-data_filtered <- subset(data,startsWith(data$`Country name`,""))
 
-data_filtered %>% 
-  ggplot(aes(x = `year`, y = `Generosity`, color = `Country name`) +
-  theme(legend.position = "none") +
-  geom_line())
+data_filtered <- subset(data,`Country name`=="Afghanistan") %>%
+  mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
+  gather(key = "var", value = "value", -`Country name`, -year)
 
 
-ggplot(data = data_filtered,aes(x = year, y = Generosity, color = `Country name`)) +
+
+data_tidy <- data %>%
+  group_by(`Country name`) %>%
+  mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
+  gather(key = "var", value = "value", -`Country name`, -year)
+
+data_filtered <- data_tidy %>%
+  filter(`Country name` == "Germany")
+
+ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
   theme(legend.position = "none") +
   geom_line() +
   labs(
     title = "World Happiness Report 2021", 
-    y = "Generosity"
+    subtitle = data_filtered$`Country name`,
+    caption = paste0("Data from ",range(data_filtered$year)[1],"-",range(data_filtered$year)[2]),
+    y = "",
+    x = ""
   ) +
+  facet_wrap(~var)+
   theme(
-    panel.background = element_rect(fill = "white")
-  )
+    panel.background = element_rect(fill = "white"),
+    text=element_text(colour="black",family="roboto"),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    #legend.position="top",
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank()
+    
+    ) 
 
-  
-#aes(color = `Country name`)
