@@ -16,11 +16,15 @@ ui <- fluidPage(
   tags$style('.container-fluid {
                              background-color: #e0f4f4;
               }'),
-  #fluidRow(
-    column(12, align="center",
-      selectInput('country', '', unique(data_tidy$`Country name`),
-                  selected = "Germany")
-    #)
+  #fluidRow(  #fluidRow(
+  column(4, align="left",
+         titlePanel("World Happiness Report 2021"),
+  ),
+  
+  column(8, align="center",
+         selectInput('country', '', unique(data$`Country name`),
+                     selected = "Germany")
+         #)
   ),
   
   withSpinner(plotOutput('plot')),
@@ -38,8 +42,8 @@ server <- server <- function(input, output) {
     ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
     geom_line() +
     labs(
-      title = "World Happiness Report 2021", 
-      subtitle = data_filtered$`Country name`,
+      #title = "World Happiness Report 2021", 
+      #subtitle = data_filtered$`Country name`,
       caption = paste0("Data from ",range(data_filtered$year)[1],"-",range(data_filtered$year)[2]),
       y = "",
       x = ""
