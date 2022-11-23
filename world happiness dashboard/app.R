@@ -13,19 +13,28 @@ data_tidy <- readRDS("world_happiness_tidy.rds")
 
 
 ui <- fluidPage(
-  tags$style('.container-fluid {
-                             background-color: #e0f4f4;
-              }'),
+  tags$style(
+    HTML('
+         h4 { margin-top:25px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         }
+         
+         .container-fluid {
+           background-color: #e0f4f4;
+
+         ')),
   #fluidRow(  #fluidRow(
-  column(4, align="left",
-         titlePanel("World Happiness Report 2021"),
-  ),
-  
-  column(8, align="center",
-         selectInput('country', '', unique(data$`Country name`),
-                     selected = "Germany")
-         #)
-  ),
+    column(4, align="left",
+           h4("World Happiness Report 2021"),
+    ),
+    
+    column(8, align="center",
+           selectInput('country', '', unique(data$`Country name`),
+                       selected = "Germany")
+           #)
+    ),
   
   withSpinner(plotOutput('plot')),
   
