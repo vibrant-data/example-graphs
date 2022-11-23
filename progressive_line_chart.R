@@ -1,7 +1,6 @@
 # libraries:
 library(ggplot2)
 library(gganimate)
-library(babynames)
 library(hrbrthemes)
 library(dplyr)
 library(viridis)
@@ -38,16 +37,25 @@ p <- t %>%
   #theme_ipsum_rc()+
   scale_x_date(date_breaks = "1 year", date_labels = "%Y")+
   theme_minimal()+
-  theme(axis.title.y=element_blank(),
+  theme(text=element_text(colour="black",family="roboto"),
+        axis.title.y=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
         axis.title.x = element_blank(),
+        
         legend.position="top",
         legend.title = element_blank(),
         panel.grid.major=element_line(colour="white"),
-        panel.grid.minor=element_line(colour="white"))+
-  transition_reveal(Jahr)
+        panel.grid.major.y=element_blank(),
+        panel.grid.minor.x=element_blank(), #turn off minor gridlines
+        panel.grid.minor.y=element_blank())+ #turn off minor gridlines)
+  transition_reveal(Jahr)+
+  ease_aes('linear')+
+  enter_fade()+
+  exit_fade()
 
-animate(p, duration = 1, fps = 100, width = 600, height = 400, renderer = magick_renderer(), bg = 'transparent')
-anim_save("trend_progressive_linechart5t.gif")
+#p
+
+animate(p, fps = 50, detail = 5, duration = 10, end_pause = 10, width = 600, height = 400, res=84, renderer = magick_renderer(), bg = 'transparent')
+anim_save("trend_progressive_linechart7.gif")
 
