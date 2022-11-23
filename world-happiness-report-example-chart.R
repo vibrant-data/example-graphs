@@ -1,20 +1,13 @@
 library(tidyverse)
 data <- read_csv("world-happiness-report.csv")
 
-# data_filtered <- data %>%
-#   filter(`Country name` == "Germany")
-
-
-data_filtered <- subset(data,`Country name`=="Afghanistan") %>%
-  mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
-  gather(key = "var", value = "value", -`Country name`, -year)
-
-
 
 data_tidy <- data %>%
   group_by(`Country name`) %>%
   mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
   gather(key = "var", value = "value", -`Country name`, -year)
+
+
 
 data_filtered <- data_tidy %>%
   filter(`Country name` == "Germany")

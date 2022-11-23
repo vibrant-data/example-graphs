@@ -3,13 +3,14 @@ library(tidyverse)
 library(shinycssloaders)
 library(plotly)
 
+data <- read_csv("world-happiness-report.csv")
 
-'data_tidy <- data %>%
+data_tidy <- data %>%
   group_by(`Country name`) %>%
   mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
-  gather(key = "var", value = "value", -`Country name`, -year)'
+  gather(key = "var", value = "value", -`Country name`, -year)
 
-data_tidy <- readRDS("world_happiness_tidy.rds")
+#data_tidy <- readRDS("world_happiness_tidy.rds")
 
 ui <- fluidPage(
   tags$style(
@@ -78,7 +79,7 @@ server <- server <- function(input, output) {
       panel.grid.major=element_blank(),
       panel.grid.minor=element_blank()
     ) 
-    ggplotly(p, tooltip = c("year")) %>% config(displayModeBar = F)
+    ggplotly(p, tooltip = c("year", data$`Life Ladder`[data$`Country name`==input$country])) %>% config(displayModeBar = F)
   })
   }
 
