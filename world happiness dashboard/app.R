@@ -1,6 +1,7 @@
 library(shiny)
 library(tidyverse)
 library(shinycssloaders)
+library(plotly)
 
 'data <- read_csv("world-happiness-report.csv")
 
@@ -31,24 +32,27 @@ ui <- fluidPage(
     ),
     
     column(8, align="center",
-           selectInput('country', '', unique(data$`Country name`),
+           selectInput('country', '', unique(data_tidy$`Country name`),
                        selected = "Germany")
            #)
+
     ),
   
-  withSpinner(plotOutput('plot')),
+    verticalLayout(
+      withSpinner(plotlyOutput('plot')),
+    )
   
 
 )
 
 server <- server <- function(input, output) {
 
-  output$plot <- renderPlot({
+  output$plot <- renderPlotly({
     
     data_filtered <- data_tidy %>%
       filter(`Country name` == input$country)
     
-    ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
+    p <- ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
     geom_line() +
     labs(
       #title = "World Happiness Report 2021", 
@@ -75,6 +79,7 @@ server <- server <- function(input, output) {
       panel.grid.major=element_blank(),
       panel.grid.minor=element_blank()
     ) 
+    ggplotly(p, tooltip = c("year")) %>% config(displayModeBar = F)
   })
   }
 
