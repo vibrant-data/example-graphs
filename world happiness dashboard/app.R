@@ -2,15 +2,13 @@ library(shiny)
 library(tidyverse)
 library(shinycssloaders)
 
-'data <- read_csv("world-happiness-report.csv")
 
-data_tidy <- data %>%
+'data_tidy <- data %>%
   group_by(`Country name`) %>%
   mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
   gather(key = "var", value = "value", -`Country name`, -year)'
 
 data_tidy <- readRDS("world_happiness_tidy.rds")
-
 
 ui <- fluidPage(
   tags$style(
@@ -37,7 +35,7 @@ ui <- fluidPage(
 
     ),
   
-  withSpinner(plotOutput('plot')),
+  withSpinner(plotOutput('plot'), type = 6),
   
 
 )
