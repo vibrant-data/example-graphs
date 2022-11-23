@@ -1,13 +1,16 @@
 library(shiny)
 library(tidyverse)
-#library(shinycssloaders)
+library(shinycssloaders)
 
-data <- read_csv("world-happiness-report.csv")
+'data <- read_csv("world-happiness-report.csv")
 
 data_tidy <- data %>%
   group_by(`Country name`) %>%
   mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
-  gather(key = "var", value = "value", -`Country name`, -year)
+  gather(key = "var", value = "value", -`Country name`, -year)'
+
+data_tidy <- readRDS("world_happiness_tidy.rds")
+
 
 ui <- fluidPage(
   tags$style('.container-fluid {
@@ -15,12 +18,12 @@ ui <- fluidPage(
               }'),
   #fluidRow(
     column(12, align="center",
-      selectInput('country', '', unique(data$`Country name`),
+      selectInput('country', '', unique(data_tidy$`Country name`),
                   selected = "Germany")
     #)
   ),
   
-  plotOutput('plot'),
+  withSpinner(plotOutput('plot')),
   
 
 )
@@ -33,7 +36,6 @@ server <- server <- function(input, output) {
       filter(`Country name` == input$country)
     
     ggplot(data = data_filtered,aes(x = year, y = value, color = `var`)) +
-    theme(legend.position = "none") +
     geom_line() +
     labs(
       title = "World Happiness Report 2021", 
@@ -44,11 +46,19 @@ server <- server <- function(input, output) {
     ) +
     facet_wrap(~var)+
     theme(
-      panel.background = element_rect(fill = "transparent"),
+      rect = element_rect(fill = "transparent"),
+      panel.background = element_rect(fill = "transparent",
+                                      colour = NA_character_), # necessary to avoid drawing panel outline
+      plot.background = element_rect(fill = "transparent",
+                                     colour = NA_character_), # necessary to avoid drawing plot outline
+      legend.background = element_rect(fill = "transparent"),
+      legend.box.background = element_rect(fill = "transparent"),
+      legend.key = element_rect(fill = "transparent"),
+      strip.background = element_rect(fill = "#e0f4f4"),
       #text=element_text(colour="black",family="Roboto Condensed"),
       axis.text = element_blank(),
       axis.ticks = element_blank(),
-      #legend.position="top",
+      legend.position = "none",
       panel.grid.major=element_blank(),
       panel.grid.minor=element_blank()
     ) 
