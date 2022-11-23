@@ -16,16 +16,16 @@ ui <- fluidPage(
   tags$style('.container-fluid {
                              background-color: #e0f4f4;
               }'),
-  #fluidRow(  #fluidRow(
-  column(4, align="left",
-         titlePanel("World Happiness Report 2021"),
-  ),
+  fluidRow(
+    column(4, align="left",
+           h4("World Happiness Report 2021"),
+    ),
   
-  column(8, align="center",
-         selectInput('country', '', unique(data$`Country name`),
-                     selected = "Germany")
-         #)
-  ),
+    column(8, align="center",
+           selectInput('country', '', unique(data_tidy$`Country name`),
+                       selected = "Germany")
+           )
+    ),
   
   withSpinner(plotOutput('plot')),
   
