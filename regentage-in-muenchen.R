@@ -21,10 +21,10 @@ s.regenhoch <- data$prcp[which(data$prcp == max(data$prcp))]
 data$rainfall <- -1*data$prcp
 
 p1 <- ggplot(data) + 
-  #geom_bar(aes(x = date, y = rainfall), colour = "white", stat='identity') +
-  geom_bar(aes(x = date, y = rainfall, color=rainfall), stat='identity') +
+  geom_bar(aes(x = date, y = rainfall), colour = "white", stat='identity') +
+  #geom_bar(aes(x = date, y = rainfall, color=rainfall), stat='identity') +
   #scale_color_gradient(low="lightskyblue1", high="white")+
-  scale_color_continuous()+
+  #scale_color_continuous()+
   annotate(geom = "point", x = s.regenhoch.d, y = min(data$rainfall), colour = "white", size = 3) + 
   #annotate(geom = "text", x = s.regenhoch.d+150, y = min(data$rainfall) + 3, colour = "white", size = 3, hjust = 0, nudge_x=1, label = paste0("Der meiste Regen viel in der Nacht auf den 30.06.2011\n(",s.regenhoch," mm an einem Tag)")) +
   geom_text(x = s.regenhoch.d+200, y = min(data$rainfall) + 3, colour = "white", size = 3, hjust = 0, label = paste0("Der meiste Regen fiel in der Nacht auf den 30.06.2011\n(",s.regenhoch," mm an einem Tag)")) + 
@@ -53,6 +53,7 @@ p3 <- plot_grid(p2, p1, ncol = 2, rel_widths = c(1,2)) +
 print(p3)
 grid.text(label = "Täglicher Niederschlag in den letzten 10 jahren (01.01.2011 - 31.12.2021)",
           x = 0.57, y = 0.81, gp=gpar(fontsize=8, col="white", fontfamily="Roboto Condensed"))
+
 
 
 
