@@ -1,6 +1,6 @@
 library(shiny)
 library(tidyverse)
-library(shinycssloaders)
+#library(shinycssloaders)
 
 data <- read_csv("world-happiness-report.csv")
 
@@ -10,16 +10,15 @@ data_tidy <- data %>%
   gather(key = "var", value = "value", -`Country name`, -year)
 
 ui <- fluidPage(
-  
-
+  tags$style('.container-fluid {
+                             background-color: #e0f4f4;
+              }'),
   #fluidRow(
     column(12, align="center",
       selectInput('country', '', unique(data$`Country name`),
                   selected = "Germany")
     #)
   ),
-  
-  hr(),
   
   plotOutput('plot'),
   
@@ -45,7 +44,7 @@ server <- server <- function(input, output) {
     ) +
     facet_wrap(~var)+
     theme(
-      panel.background = element_rect(fill = "white"),
+      panel.background = element_rect(fill = "transparent"),
       #text=element_text(colour="black",family="Roboto Condensed"),
       axis.text = element_blank(),
       axis.ticks = element_blank(),
