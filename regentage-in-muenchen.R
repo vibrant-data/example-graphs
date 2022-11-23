@@ -55,6 +55,7 @@ grid.text(label = "Täglicher Niederschlag in den letzten 10 jahren (01.01.2011 
           x = 0.57, y = 0.81, gp=gpar(fontsize=8, col="white", fontfamily="Roboto Condensed"))
 
 
+ggsave("regentage_in_muenchen.png", width=3000, height = 2000, units = "px")
 
 
 ## version with color gradient
