@@ -31,9 +31,10 @@ ui <- fluidPage(
     ),
     
     column(8, align="center",
-           selectInput('country', '', unique(data$`Country name`),
+           selectInput('country', '', unique(data_tidy$`Country name`),
                        selected = "Germany")
            #)
+
     ),
   
   withSpinner(plotOutput('plot')),
