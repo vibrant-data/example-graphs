@@ -15,30 +15,32 @@ data_tidy <- data %>%
 ui <- fluidPage(
   tags$style(
     HTML('
-         h4 { margin-top:25px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
+         h1 {
+           font-family:"Roboto"; 
+           font-size:1.2em; 
+           margin:0px;
          }
-         
          .container-fluid {
            background-color: #e0f4f4;
-
+         }
+         .selectize-input input {
+           font-family:"Roboto"; 
+         }
          ')),
   #fluidRow(  #fluidRow(
-    column(4, align="left",
-           h4("World Happiness Report 2021"),
-    ),
+    #column(4, align="left",
+    #       p("World Happiness Report 2021"),
+    #),
     
-    column(8, align="center",
+    column(12, align="center",
+           h1("World Happiness Report 2021"),
            selectInput('country', '', unique(data_tidy$`Country name`),
                        selected = "Germany")
-           #)
 
     ),
   
     verticalLayout(
-      withSpinner(plotlyOutput('plot')),
+      withSpinner(plotlyOutput('plot'), type = 6),
     )
 
   
@@ -64,14 +66,11 @@ server <- server <- function(input, output) {
     facet_wrap(~var)+
     theme(
       rect = element_rect(fill = "transparent"),
-      panel.background = element_rect(fill = "transparent",
-                                      colour = NA_character_), # necessary to avoid drawing panel outline
-      plot.background = element_rect(fill = "transparent",
-                                     colour = NA_character_), # necessary to avoid drawing plot outline
-      legend.background = element_rect(fill = "transparent"),
-      legend.box.background = element_rect(fill = "transparent"),
-      legend.key = element_rect(fill = "transparent"),
-      strip.background = element_rect(fill = "#e0f4f4"),
+      panel.background = element_rect(fill = "#E6FAFA"),
+      #                                colour = NA_character_), # necessary to avoid drawing panel outline
+                                       #colour = "white", size=1),
+      strip.background = element_rect(fill = "#DAEDED"),
+      strip.text = element_text(family="Roboto Condensed", size=8),
       #text=element_text(colour="black",family="Roboto Condensed"),
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -79,7 +78,7 @@ server <- server <- function(input, output) {
       panel.grid.major=element_blank(),
       panel.grid.minor=element_blank()
     ) 
-    ggplotly(p, tooltip = c("year", data$`Life Ladder`[data$`Country name`==input$country])) %>% config(displayModeBar = F)
+    ggplotly(p, tooltip = "year", originalData = FALSE) %>% config(displayModeBar = F)
   })
   }
 
