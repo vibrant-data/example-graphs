@@ -63,7 +63,7 @@ server <- server <- function(input, output) {
       y = "",
       x = ""
     ) +
-    facet_wrap(~var, scales = "free")+
+    facet_wrap(~var, scales = "free_y")+
     theme(
       rect = element_rect(fill = "transparent"),
       panel.background = element_rect(fill = "#E6FAFA"),
