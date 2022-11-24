@@ -7,7 +7,7 @@ data <- read_csv("world-happiness-report.csv")
 
 data_tidy <- data %>%
   group_by(`Country name`) %>%
-  mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
+  #mutate(across(`Life Ladder`:`Negative affect`, scale)) %>%
   gather(key = "var", value = "value", -`Country name`, -year)
 
 #data_tidy <- readRDS("world_happiness_tidy.rds")
@@ -63,7 +63,7 @@ server <- server <- function(input, output) {
       y = "",
       x = ""
     ) +
-    facet_wrap(~var)+
+    facet_wrap(~var, scales = "free")+
     theme(
       rect = element_rect(fill = "transparent"),
       panel.background = element_rect(fill = "#E6FAFA"),
@@ -78,7 +78,7 @@ server <- server <- function(input, output) {
       panel.grid.major=element_blank(),
       panel.grid.minor=element_blank()
     ) 
-    ggplotly(p, tooltip = "year", originalData = FALSE) %>% config(displayModeBar = F)
+    ggplotly(p, tooltip = c("value","year")) %>% config(displayModeBar = F)
   })
   }
 
