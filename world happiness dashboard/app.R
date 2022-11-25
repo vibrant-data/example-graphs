@@ -33,9 +33,11 @@ ui <- fluidPage(
     #),
     
     column(12, align="center",
-           h1("World Happiness Report 2021"),
-           selectInput('country', '', unique(data_tidy$`Country name`),
-                       selected = "Germany")
+           div(style="white-space: nowrap;",
+             div(selectInput('country', '', unique(data_tidy$`Country name`),
+                         selected = "Germany"), style="display: inline-block;"),
+             div(HTML("WORLD<br>HAPPINESS<br>REPORT<br>2021"), style="display: inline-block; text-align:right; font-family:'Roboto Condensed'; line-height: 80%;"),
+             )
 
     ),
   
