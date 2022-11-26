@@ -35,8 +35,8 @@ ui <- fluidPage(
     column(12, align="center",
            div(style="white-space: nowrap;",
              div(selectInput('country', '', unique(data_tidy$`Country name`),
-                         selected = "Germany"), style="display: inline-block;"),
-             div(HTML("WORLD<br>HAPPINESS<br>REPORT<br>2021"), style="display: inline-block; text-align:right; font-family:'Roboto Condensed'; line-height: 80%;"),
+                         selected = sample(data_tidy$`Country name`, 1)), style="display: inline-block; margin:auto;"),
+             div(HTML("WORLD<br>HAPPINESS<br>REPORT<br>2021"), style="display: inline-block; text-align:right; font-family:'Roboto Condensed'; line-height: 80%; margin-left:30px;"),
              )
 
     ),
